@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% block title %} Blueprint Fabric {% endblock %} {%
+block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <form action="" class="form" method="post">
+        {{ form.hidden_tag() }} 
+        {{form.name(class="form-control mt-5",placeholder="Name") }} 
+        {{ form.surname(class="form-control mt-2",placeholder="Surname") }} 
+        {{form.email(class="form-control mt-2",placeholder="Email") }} 
+        {{ form.submit(class="btn mt-2 btn-lg
+        btn-info")}}
+      </form>
+      <div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col-1">Name</th>
+              <th scope="col-1">Surname</th>
+              <th scope="col-1">Email</th>
+              <th scope="col-1"></th>
+              <th scope="col-1"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in all_users %}
+
+            <tr>
+              <td>
+                
+                  {{user.name}}
+                
+              </td>
+              <td>{{user.surname}}</td>
+              <td>{{user.email_address}}</td>
+              <td class="phone">fdsf</td>
+              <td class="phone">sfsf</td>
+
+              <td>
+                <a class="btn btn-info" href="{{url_for('edit_number', id=user.id)}}">Edit Number</a>
+              </td>
+              <td><a class="btn btn-info" href="{{url_for('add_phone_number', id=user.id)}}">Add Number</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>
+
+{% endblock %}

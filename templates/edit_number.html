@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% block title %} Blueprint Fabric {% endblock %} {%
+block content %}
+<div class="container">
+  <div class="col-2"></div>
+  <div class="col-8">
+    <form action="{{url_for('edit_number',id=id)}}" class="form" method="post">
+      {{form.hidden_tag()}} {{form.phone(class="form-control
+      mt-5",placeholder="Phone") }} {{form.phone1(class="form-control
+      mt-3",placeholder="Phone") }} {{form.submit(class="btn mt-2 btn-lg btn-info")}}
+    </form>
+  </div>
+  <div class="col-2"></div>
+</div>
+{% endblock%}
