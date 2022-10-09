@@ -1,9 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, flash, redirect, url_for
 from wtforms import StringField, SubmitField
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydb.sqlite3'
@@ -27,84 +26,87 @@ class Phones(db.Model):
 
 
 class Create_User(FlaskForm):
-    name = StringField(label='Email:', validators=[DataRequired()])
-    surname = StringField(label='Email:', validators=[DataRequired()])
+    name = StringField(label='First Name:', validators=[DataRequired()])
+    surname = StringField(label='Last Name:', validators=[DataRequired()])
     email = StringField(label='Email:', validators=[DataRequired()])
-    submit = SubmitField(label='Submit')
-
-
-class Add_Edit_phone(FlaskForm):
-    phone = StringField(label='Email:')
-    phone1 = StringField(label='Email:')
-    submit = SubmitField(label='Save')
+    phone = StringField(label='Phone:', validators=[DataRequired()])
+    phone1 = StringField(label='Phone:', validators=[DataRequired()])
+    submit = SubmitField(label='Create User', validators=[DataRequired()])
 
 
 with app.app_context():
     db.create_all()
 
-#root to different page - home page
+
 @app.route('/', methods=['POST', 'GET'])
 def homepage():
-    all_users = People.query.filter().all()
-    #all_pnone = Phones.query.filter().all()
+    all_users = db.session.query(People, Phones).join(
+        Phones).filter().order_by(People.name).all()
     form = Create_User()
     if form.validate_on_submit():
         name = form.name.data
         surname = form.surname.data
         email = form.email.data
+        phone = form.phone.data
+        phone1 = form.phone1.data
         exist = True
         for user in all_users:
-            if name == user.name and surname == user.surname:
+            if name == user[0].name and surname == user[0].surname:
+                flash(f'User already exist {email}', category='danger')
                 exist = False
-            elif email == user.email_address:
+                form.name.data = form.surname.data = form.email.data = form.phone.data = form.phone1.data = ' '
+            elif email == user[0].email_address:
+                flash(f'There is a User with {email}', category='danger')
                 exist = False
+                form.name.data = form.surname.data = form.email.data = form.phone.data = form.phone1.data = ' '
         if exist:
             person = People(name=name, surname=surname,
                             email_address=email)
             db.session.add(person)
             db.session.commit()
-    all_users = People.query.filter().order_by(People.name).all()
-    return render_template('home.html', all_users=all_users, form=form)
 
-# root to add phone number
-@app.route('/phone/<int:id>', methods=['POST', 'GET'])
-def add_phone_number(id):
-    form = Add_Edit_phone()
-    if form.validate_on_submit():
-        person_found = Phones.query.filter(Phones.person_id == id).first()
-        if person_found:
-            return redirect(url_for('homepage'))
-        else:
-            phone = form.phone.data
-            phone1 = form.phone1.data
             phone_to_add = Phones(phone_number=phone,
-                                  phone_number1=phone1, person_id=id)
+                                  phone_number1=phone1, person_id=person.id)
             db.session.add(phone_to_add)
             db.session.commit()
-            return redirect(url_for('homepage'))
-    return render_template('add_number.html', form=form, id=id)
+            all_users = db.session.query(People, Phones).join(
+                Phones).filter().order_by(People.name).all()
+            form.name.data = form.surname.data = form.email.data = form.phone.data = form.phone1.data = ' '
+    return render_template('home.html', all_users=all_users, form=form)
 
-# root to edit phone number
+
+@app.route('/phone/<int:id>', methods=['POST', 'GET'])
+def delete_row(id):
+    form = Create_User()
+    People.query.filter(People.id == id).delete()
+    Phones.query.filter(Phones.person_id == id).delete()
+    db.session.commit()
+    all_users = db.session.query(People, Phones).join(
+        Phones).filter().order_by(People.name).all()
+    return render_template('home.html', form=form, all_users=all_users)
+
+
 @app.route('/edit/<int:id>', methods=['POST', 'GET'])
 def edit_number(id):
-    #
-    numbers = Phones.query.filter(Phones.person_id == id).first()
-    form = Add_Edit_phone()
+    edit_person = db.session.query(People, Phones).join(
+        Phones).filter(People.id == id).first()
+    form = Create_User()
     if form.validate_on_submit():
-        numbers.phone_number = form.phone.data
-        numbers.phone_number1 = form.phone1.data
+        edit_person[0].name = form.name.data
+        edit_person[0].surname = form.surname.data
+        edit_person[0].email_address = form.email.data
+        edit_person[1].phone_number = form.phone.data
+        edit_person[1].phone_number1 = form.phone1.data
         db.session.commit()
         db.session.close()
         return redirect(url_for('homepage'))
-    if numbers == None:
-        form.phone.data = ''
-        form.phone1.data = ''
-    else:
-        form.phone.data = numbers.phone_number
-        form.phone1.data = numbers.phone_number1
-
+    form.name.data = edit_person[0].name
+    form.surname.data = edit_person[0].surname
+    form.email.data = edit_person[0].email_address
+    form.phone.data = edit_person[1].phone_number
+    form.phone1.data = edit_person[1].phone_number1
     return render_template('edit_number.html', id=id, form=form)
 
-# code to run the programmes
+
 if __name__ == '__main__':
     app.run(debug=True)

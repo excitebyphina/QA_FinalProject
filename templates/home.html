@@ -2,53 +2,59 @@
 block content %}
 <div class="container">
   <div class="row">
-    <div class="col-2"></div>
-    <div class="col-8">
-      <form action="" class="form" method="post">
-        {{ form.hidden_tag() }} 
-        {{form.name(class="form-control mt-5",placeholder="Name") }} 
-        {{ form.surname(class="form-control mt-2",placeholder="Surname") }} 
-        {{form.email(class="form-control mt-2",placeholder="Email") }} 
-        {{ form.submit(class="btn mt-2 btn-lg
-        btn-info")}}
-      </form>
-      <div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col-1">Name</th>
-              <th scope="col-1">Surname</th>
-              <th scope="col-1">Email</th>
-              <th scope="col-1"></th>
-              <th scope="col-1"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for user in all_users %}
-
-            <tr>
-              <td>
-                
-                  {{user.name}}
-                
-              </td>
-              <td>{{user.surname}}</td>
-              <td>{{user.email_address}}</td>
-              <td class="phone">fdsf</td>
-              <td class="phone">sfsf</td>
-
-              <td>
-                <a class="btn btn-info" href="{{url_for('edit_number', id=user.id)}}">Edit Number</a>
-              </td>
-              <td><a class="btn btn-info" href="{{url_for('add_phone_number', id=user.id)}}">Add Number</a></td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+    <div class="col-12">
+      <div style="padding: 0px 25%">
+        <form action="" class="form bg-light" method="post">
+          {{ form.hidden_tag() }} {{ form.name.label(class="mb-0 mt-1") }}
+          {{form.name(class="form-control",placeholder="Name") }} {{
+          form.surname.label(class="mb-0 mt-2") }} {{
+          form.surname(class="form-control",placeholder="Surname") }} {{
+          form.email.label(class="mb-0 mt-2") }}
+          {{form.email(class="form-control ",placeholder="Email") }} {{
+          form.phone.label(class="mb-0 mt-2") }}
+          {{form.phone(class="form-control ",placeholder="Phone") }} {{
+          form.phone1.label(class="mb-0 mt-2") }}
+          {{form.phone1(class="form-control ",placeholder="Phone") }} {{
+          form.submit(class="btn mt-2 mb-2 btn-lg btn-secondary")}}
+        </form>
       </div>
+
+      <table class="table bg-light text-center">
+        <thead>
+          <tr>
+            <th scope="col-1">Name</th>
+            <th scope="col-1">Surname</th>
+            <th scope="col-1">Email</th>
+            <th scope="col-1">Phone Number</th>
+            <th scope="col-1">Phone Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in all_users %}
+
+          <tr>
+            <td>{{user[0].name}}</td>
+            <td>{{user[0].surname}}</td>
+            <td>{{user[0].email_address}}</td>
+            <td>{{user[1].phone_number}}</td>
+            <td>{{user[1].phone_number1}}</td>
+            <td class="p-0 m-0">
+              <a
+                class="btn btn-success"
+                href="{{url_for('edit_number', id=user[0].id)}}"
+                >Edit User</a
+              >
+              <a
+                class="btn btn-danger m-0"
+                href="{{url_for('delete_row', id=user[0].id)}}"
+                >Delete User</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-    <div class="col-2"></div>
   </div>
 </div>
-
 {% endblock %}
