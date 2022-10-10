@@ -6,7 +6,7 @@ This project is created an basic application to depict CRUD (Create, Read, Updat
 PROJECT FEATURES
 
 - 3 pages consisting of a bio page
-- Page to enter name, email and telephone numbers
+- Home age to enter name, email and telephone numbers
 - Edit page
 - Delete page
 
