@@ -16,3 +16,10 @@ TECHNOLOGY AIDE USED:
 •	SQLAlchemy
 •	Boot Strap
 
+HOW TO USE THE SITE/APP
+•	Home page will enable users to submit name, email, and telephone numbers.
+•	Save data. 
+•	User will then be prompted to enter variables in empty fields. 
+•	There will be edit and delete button for editing and deleting outdated or redundant data.
+•	The page in the application will all have CRUD functionalities.
+
