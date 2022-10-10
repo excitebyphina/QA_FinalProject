@@ -17,7 +17,7 @@ class People(db.Model):
     email_address = db.Column(db.String(length=50),
                               nullable=False, unique=True)
 
-
+# Database table
 class Phones(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     phone_number = db.Column(db.String(length=14), nullable=True)
@@ -109,4 +109,4 @@ def edit_number(id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
