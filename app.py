@@ -9,7 +9,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydb.sqlite3'
 app.config['SECRET_KEY'] = 'ec9439cfc6c796ae2029594d'
 db = SQLAlchemy(app)
 
-
+# Data Base Table
 class People(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(length=30), nullable=False)
@@ -31,7 +31,7 @@ class Create_User(FlaskForm):
     email = StringField(label='Email:', validators=[DataRequired()])
     phone = StringField(label='Phone:', validators=[DataRequired()])
     phone1 = StringField(label='Phone:', validators=[DataRequired()])
-    submit = SubmitField(label='Create User', validators=[DataRequired()])
+    submit = SubmitField(label='Save', validators=[DataRequired()])
 
 
 with app.app_context():
