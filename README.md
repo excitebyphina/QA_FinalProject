@@ -21,8 +21,11 @@ HOW TO USE THE SITE/APP
 •	Save data. 
 •	User will then be prompted to enter variables in empty fields. 
 •	There will be edit and delete button for editing and deleting outdated or redundant data.
-•	The page in the application will all have CRUD functionalities.
+•	The pag!
+e in the application will all have CRUD functionalities.
 
 PROJECT WAS MANAGED ON JIRA:
 ![JIRA_excitebyphina atlassian net](https://user-images.githubusercontent.com/110677679/195205017-0e0f9b71-f06b-435e-baea-0d7c3b9f7597.jpeg)
 
+APPLICATION HOME PAGE:
+![HOME](https://user-images.githubusercontent.com/110677679/195207643-b7212443-c2e6-474a-a490-bf8cced7670d.jpeg)
