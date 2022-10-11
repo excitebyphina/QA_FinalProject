@@ -1,7 +1,10 @@
-FROM python:3.10-slim-buster
-ADD . /students
-WORKDIR /students
-COPY .  .
-RUN pip install flask
-CMD [ "python", "app.py" ]
-
+FROM python:3.6
+ADD . /blueprint
+WORKDIR /blueprint
+COPY . .
+RUN pip install Flask
+RUN pip install flask_wtf
+RUN pip install wtForms
+RUN pip install flask_SQLAlchemy
+CMD [ "python", "./app.py" ]
+EXPOSE 5000
