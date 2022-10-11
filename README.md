@@ -23,4 +23,5 @@ HOW TO USE THE SITE/APP
 •	There will be edit and delete button for editing and deleting outdated or redundant data.
 •	The page in the application will all have CRUD functionalities.
 
+![JIRA_excitebyphina atlassian net](https://user-images.githubusercontent.com/110677679/195205017-0e0f9b71-f06b-435e-baea-0d7c3b9f7597.jpeg)
 
