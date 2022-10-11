@@ -24,5 +24,5 @@ HOW TO USE THE SITE/APP
 •	The page in the application will all have CRUD functionalities.
 
 ![Home Page](https://github.com/excitebyphina/QA_FinalProject/blob/main/images/Web%20capture_10-10-2022_205912_192.168.1.221.jpeg)
-![Home Page2]https://github.com/excitebyphina/QA_FinalProject/blob/main/images/Web%20capture_10-10-2022_205912_192.168.1.221.jpeg)
+![Home Page2](https://github.com/excitebyphina/QA_FinalProject/blob/main/images/Web%20capture_10-10-2022_205912_192.168.1.221.jpeg)
 
